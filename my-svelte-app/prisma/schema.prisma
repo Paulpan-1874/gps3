@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// 用户模型
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique // 用户名，唯一
+  trackings Tracking[] // 关联：一个用户可以有多个跟踪记录
+  createdAt DateTime @default(now())
+}
+
+// 店铺模型
+model Store {
+  id      Int      @id @default(autoincrement())
+  name    String   // 店铺名称
+  phone   String   // 电话
+  address String   // 地址
+  createdAt DateTime @default(now())
+}
+
+// 跟踪表模型
+model Tracking {
+  id          Int      @id @default(autoincrement())
+  phone       String   // 电话号码
+  userId      Int      // 用户ID
+  isAdded     Boolean  @default(false) // 是否已添加
+  isValid     Boolean  @default(true)  // 是否有效
+  createdAt   DateTime @default(now())
+  
+  // 关联到用户
+  user        User     @relation(fields: [userId], references: [id])
+}
