@@ -35,17 +35,15 @@
     try {
       const res = await fetch('/api/stores?action=random')  // 添加 ?action=random 参数
       if (res.ok) {
-        // API 返回完整的店铺对象
-        const randomStore = await res.json()
+        // API 返回 { phone, stores: [...] }
+        const { phone, stores } = await res.json()
         
-        if (randomStore) {
-          currentPhone = randomStore.phone
-          
-          // 直接使用返回的店铺作为当前店铺
-          currentStores = [randomStore]
+        if (phone && stores) {
+          currentPhone = phone
+          currentStores = stores
           
           // 获取该电话号码的追踪记录
-          await getTrackingRecords(randomStore.phone)
+          await getTrackingRecords(phone)
         }
       }
     } catch (error) {
