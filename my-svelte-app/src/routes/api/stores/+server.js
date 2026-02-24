@@ -37,8 +37,11 @@ export async function POST({ request }) {
 
 export async function GET() {
   try {
-    // 查询所有店铺
-    const stores = await prisma.store.findMany()
+    // 查询最新的100个店铺（按创建时间倒序）
+    const stores = await prisma.store.findMany({
+      orderBy: { createdAt: 'desc' },  // 按创建时间倒序
+      take: 100  // 只取前100个
+    })
 
     // 返回结果
     return json(stores)
