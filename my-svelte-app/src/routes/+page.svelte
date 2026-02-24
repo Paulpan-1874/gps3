@@ -213,25 +213,25 @@
       <h3>电话号码：{currentPhone}</h3>
       <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
         <button 
-          style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;"
+          style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;"
           on:click={copyPhone}
         >
           {copyButtonText}
         </button>
         <button 
-          style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;"
+          style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;"
           on:click={getRandomStore}
         >
           下一个店铺
         </button>
         <button 
-          style="padding: 8px 16px; border: 1px solid #4CAF50; border-radius: 4px; cursor: pointer; background-color: #f0fff0;"
+          style="padding: 8px 12px; border: 1px solid #4CAF50; border-radius: 4px; cursor: pointer; background-color: #f0fff0;"
           on:click={markAsAdded}
         >
           {addedButtonText}
         </button>
         <button 
-          style="padding: 8px 16px; border: 1px solid #f44336; border-radius: 4px; cursor: pointer; background-color: #fff0f0;"
+          style="padding: 8px 12px; border: 1px solid #f44336; border-radius: 4px; cursor: pointer; background-color: #fff0f0;"
           on:click={markAsInvalid}
         >
           {invalidButtonText}
