@@ -244,7 +244,7 @@
 
   // 获取追踪结果状态（兼容旧字段）
   function getTrackingStatus(record) {
-    if (record.trackingResult !== undefined) {
+    if (record.trackingResult !== undefined && record.trackingResult !== null) {
       return record.trackingResult
     } else if (record.isAdded && record.isValid) {
       return 1 // 👍
