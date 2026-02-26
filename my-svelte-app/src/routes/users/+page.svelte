@@ -3,23 +3,10 @@
 
   let username = ''
   let isSubmitting = false
-  let message = ''
-  let messageType = ''
-
-  // 显示消息
-  function showMessage(text, type = 'success') {
-    message = text
-    messageType = type
-    setTimeout(() => {
-      message = ''
-      messageType = ''
-    }, 3000)
-  }
 
   // 提交表单新增用户
   async function handleSubmit() {
     if (!username.trim()) {
-      showMessage('请输入用户名称', 'error')
       return
     }
 
@@ -33,16 +20,15 @@
 
       if (res.ok) {
         // 新增成功，刷新页面更新列表
-        showMessage('用户添加成功！')
         setTimeout(() => {
           window.location.reload()
         }, 1000)
       } else {
         const errorData = await res.json()
-        showMessage(errorData.error || '添加失败', 'error')
+        console.error('添加失败:', errorData.error || '添加失败')
       }
     } catch (error) {
-      showMessage('网络错误，请稍后重试', 'error')
+      console.error('网络错误，请稍后重试:', error)
     } finally {
       isSubmitting = false
     }
@@ -58,12 +44,7 @@
 
 <h1>用户页</h1>
 
-<!-- 消息提示 -->
-{#if message}
-  <div style="padding: 10px; margin-bottom: 15px; border-radius: 4px; {messageType === 'error' ? 'background-color: #ffebee; color: #c62828;' : 'background-color: #e8f5e8; color: #2e7d32;'} ">
-    {message}
-  </div>
-{/if}
+
 
 <!-- 添加用户输入框 -->
 <form on:submit|preventDefault={handleSubmit} style="margin-bottom: 20px;">

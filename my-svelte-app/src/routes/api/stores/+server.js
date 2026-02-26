@@ -66,6 +66,16 @@ export async function GET({ url }) {
       
       return json({ error: '暂无店铺' }, { status: 404 })
     }
+
+    // 在 GET 函数中添加
+    if (action === 'random50') {
+      // 使用原生 SQL 随机选择 50 个店铺
+      const randomStores = await prisma.$queryRaw`
+        SELECT * FROM Store ORDER BY RANDOM() LIMIT 50
+      `;
+      
+      return json(randomStores);
+    }
     
     // 默认查询最新的100个店铺（按创建时间倒序）
     const stores = await prisma.store.findMany({

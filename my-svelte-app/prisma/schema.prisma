@@ -25,13 +25,14 @@ model Store {
 
 // 跟踪表模型
 model Tracking {
-  id          Int      @id @default(autoincrement())
-  phone       String   // 电话号码
-  userId      Int      // 用户ID
-  isAdded     Boolean  @default(false) // 是否已添加
-  isValid     Boolean  @default(true)  // 是否有效
-  createdAt   DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  phone           String   // 电话号码
+  userId          Int      // 用户ID
+  isAdded         Boolean  @default(false) // 是否已添加
+  isValid         Boolean  @default(true)  // 是否有效
+  trackingResult  Int?     // 追踪结果：1=👍，2=👎
+  createdAt       DateTime @default(now())
   
   // 关联到用户
-  user        User     @relation(fields: [userId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
 }
