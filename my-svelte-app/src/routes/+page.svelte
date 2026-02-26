@@ -241,6 +241,18 @@
       console.warn('请先选择用户')
     }
   }
+
+  // 获取追踪结果状态（兼容旧字段）
+  function getTrackingStatus(record) {
+    if (record.trackingResult !== undefined) {
+      return record.trackingResult
+    } else if (record.isAdded && record.isValid) {
+      return 1 // 👍
+    } else if (!record.isValid) {
+      return 2 // 👎
+    }
+    return null
+  }
 </script>
 
 <!-- 导航链接 -->
@@ -286,7 +298,7 @@
           <!-- 用户操作记录 -->
           {#if trackingRecordsMap.get(store.phone)?.length > 0 && trackingRecordsMap.get(store.phone)[0]}
             <div style="font-size: 14px; margin-bottom: 5px;">
-              <span style="{trackingRecordsMap.get(store.phone)[0].trackingResult === 1 ? 'color: #4CAF50; font-weight: bold;' : 'color: #f44336; font-weight: bold;'}">
+              <span style="{getTrackingStatus(trackingRecordsMap.get(store.phone)[0]) === 1 ? 'color: #4CAF50; font-weight: bold;' : 'color: #f44336; font-weight: bold;'}">
                 {data.users.find(u => u.id === trackingRecordsMap.get(store.phone)[0].userId)?.username}
               </span>
               <span style="font-size: 12px; color: #999; margin-left: 10px;">
@@ -337,16 +349,20 @@
               <div style="margin-top: 5px; padding: 12px; background-color: #f9f9f9; border-radius: 4px;">
                 {#each trackingRecordsMap.get(store.phone) as record}
                   <div style="font-size: 13px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-                    <span>{#if record.trackingResult === 1}
-                      <span style="color: #4CAF50; font-weight: bold;">{data.users.find(u => u.id === record.userId)?.username}</span>
-                    {:else if record.trackingResult === 2}
-                      <span style="color: #f44336; font-weight: bold;">{data.users.find(u => u.id === record.userId)?.username}</span>
-                    {/if}</span>
-                    <span>{#if record.trackingResult === 1}
-                      <span style="color: #666;">👍</span>
-                    {:else if record.trackingResult === 2}
-                      <span style="color: #666;">👎</span>
-                    {/if}</span>
+                    <span>
+                      <span style="{getTrackingStatus(record) === 1 ? 'color: #4CAF50; font-weight: bold;' : getTrackingStatus(record) === 2 ? 'color: #f44336; font-weight: bold;' : 'color: #666;'}">
+                        {data.users.find(u => u.id === record.userId)?.username}
+                      </span>
+                    </span>
+                    <span>
+                      {#if getTrackingStatus(record) === 1}
+                        <span style="color: #666;">👍</span>
+                      {:else if getTrackingStatus(record) === 2}
+                        <span style="color: #666;">👎</span>
+                      {:else}
+                        <span style="color: #999;">-</span>
+                      {/if}
+                    </span>
                     <span style="font-size: 11px; color: #666;">{new Date(record.createdAt).toLocaleString()}</span>
                   </div>
                 {/each}
