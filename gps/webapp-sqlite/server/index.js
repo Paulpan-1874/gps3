@@ -13,18 +13,39 @@ app.post('/api/gps', async (req, res) => {
   try {
     const { longitude, latitude, altitude, vbat } = req.body;
     
+    // 处理字符串 "null" 为 null 值
+    const processValue = (value) => {
+      return value === "null" ? null : value;
+    };
+
+    const processedLongitude = processValue(longitude);
+    const processedLatitude = processValue(latitude);
+    const processedAltitude = processValue(altitude);
+    const processedVbat = processValue(vbat);
+    
     // 验证数据
-    if (typeof longitude !== 'string' || typeof latitude !== 'string' || typeof altitude !== 'string' || typeof vbat !== 'number') {
-      return res.status(400).json({ error: 'Invalid data format' });
+    if ((processedLongitude !== null && typeof processedLongitude !== 'string') || 
+        (processedLatitude !== null && typeof processedLatitude !== 'string') || 
+        (processedAltitude !== null && typeof processedAltitude !== 'string') || 
+        (processedVbat !== null && typeof processedVbat !== 'number')) {
+      return res.status(400).json({ 
+        error: 'Invalid data format',
+        details: {
+          longitude: typeof processedLongitude,
+          latitude: typeof processedLatitude,
+          altitude: typeof processedAltitude,
+          vbat: typeof processedVbat
+        }
+      });
     }
     
     // 存储数据到数据库
     const gpsData = await prisma.gPSData.create({
       data: {
-        longitude,
-        latitude,
-        altitude,
-        vbat
+        longitude: processedLongitude,
+        latitude: processedLatitude,
+        altitude: processedAltitude,
+        vbat: processedVbat
       }
     });
     
