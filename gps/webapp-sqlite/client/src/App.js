@@ -58,12 +58,12 @@ function App() {
     setSuccess(null);
 
     try {
-      // 转换数据类型
+      // 直接使用字符串数据
       const dataToSend = {
-        longitude: parseFloat(formData.longitude),
-        latitude: parseFloat(formData.latitude),
-        altitude: parseFloat(formData.altitude),
-        vbat: parseFloat(formData.vbat)
+        longitude: formData.longitude,
+        latitude: formData.latitude,
+        altitude: formData.altitude,
+        vbat: formData.vbat
       };
 
       // 发送数据到后端
