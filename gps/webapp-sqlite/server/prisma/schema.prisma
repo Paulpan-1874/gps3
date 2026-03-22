@@ -15,7 +15,7 @@ model GPSData {
   longitude String?    @map("longitude")
   latitude  String?    @map("latitude")
   altitude  String?    @map("altitude")
-  vbat      String?    @map("vbat")
+  vbat      Float?    @map("vbat")
 
   createdAt DateTime @default(now())
 
