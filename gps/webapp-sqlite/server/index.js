@@ -8,13 +8,13 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
-// POST 接口，接收经纬度和电压数据
+// POST 接口，接收经纬度、海拔和电压数据
 app.post('/api/gps', async (req, res) => {
   try {
-    const { longitude, latitude, voltage } = req.body;
+    const { longitude, latitude, altitude, vbat } = req.body;
     
     // 验证数据
-    if (typeof longitude !== 'number' || typeof latitude !== 'number' || typeof voltage !== 'number') {
+    if (typeof longitude !== 'number' || typeof latitude !== 'number' || typeof altitude !== 'number' || typeof vbat !== 'number') {
       return res.status(400).json({ error: 'Invalid data format' });
     }
     
@@ -23,7 +23,8 @@ app.post('/api/gps', async (req, res) => {
       data: {
         longitude,
         latitude,
-        voltage
+        altitude,
+        vbat
       }
     });
     

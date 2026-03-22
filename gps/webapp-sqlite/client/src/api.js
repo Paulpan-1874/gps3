@@ -1,7 +1,7 @@
 // API 服务文件，用于与后端通信
 
-// 基础 URL - 使用相对路径，自动适应部署环境
-const API_BASE_URL = '/api';
+// 基础 URL - 使用绝对路径指向后端服务器
+const API_BASE_URL = 'http://localhost:3001/api';
 
 // 存储 GPS 数据
 export const saveGPSData = async (data) => {

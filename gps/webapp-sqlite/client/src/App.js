@@ -8,7 +8,8 @@ function App() {
   const [formData, setFormData] = useState({
     longitude: '',
     latitude: '',
-    voltage: ''
+    altitude: '',
+    vbat: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -47,7 +48,7 @@ function App() {
     e.preventDefault();
     
     // 验证表单数据
-    if (!formData.longitude || !formData.latitude || !formData.voltage) {
+    if (!formData.longitude || !formData.latitude || !formData.altitude || !formData.vbat) {
       setError('Please fill in all fields');
       return;
     }
@@ -61,7 +62,8 @@ function App() {
       const dataToSend = {
         longitude: parseFloat(formData.longitude),
         latitude: parseFloat(formData.latitude),
-        voltage: parseFloat(formData.voltage)
+        altitude: parseFloat(formData.altitude),
+        vbat: parseFloat(formData.vbat)
       };
 
       // 发送数据到后端
@@ -75,7 +77,8 @@ function App() {
       setFormData({
         longitude: '',
         latitude: '',
-        voltage: ''
+        altitude: '',
+        vbat: ''
       });
       
       setSuccess('GPS data saved successfully');
@@ -137,12 +140,24 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="voltage">Voltage</label>
+            <label htmlFor="altitude">Altitude</label>
             <input
               type="number"
-              id="voltage"
-              name="voltage"
-              value={formData.voltage}
+              id="altitude"
+              name="altitude"
+              value={formData.altitude}
+              onChange={handleInputChange}
+              step="0.1"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="vbat">VBat</label>
+            <input
+              type="number"
+              id="vbat"
+              name="vbat"
+              value={formData.vbat}
               onChange={handleInputChange}
               step="0.1"
               required
@@ -167,7 +182,8 @@ function App() {
               <h3>Record #{data.id}</h3>
               <p>Longitude: {data.longitude}</p>
               <p>Latitude: {data.latitude}</p>
-              <p>Voltage: {data.voltage}</p>
+              <p>Altitude: {data.altitude}</p>
+              <p>VBat: {data.vbat}</p>
               <p className="timestamp">Recorded at: {formatDate(data.createdAt)}</p>
             </div>
           ))

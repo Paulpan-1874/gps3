@@ -12,9 +12,11 @@ datasource db {
 
 model GPSData {
   id        Int      @id @default(autoincrement())
-  longitude Float    @map("longitude")
-  latitude  Float    @map("latitude")
-  voltage   Float    @map("voltage")
+  longitude Float?    @map("longitude")
+  latitude  Float?    @map("latitude")
+  altitude  Float?    @map("altitude")
+  vbat      Float?    @map("vbat")
+
   createdAt DateTime @default(now())
 
   @@map("gps_data")
