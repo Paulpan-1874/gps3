@@ -58,12 +58,12 @@ function App() {
     setSuccess(null);
 
     try {
-      // 直接使用字符串数据
+      // 转换 vbat 为数字，其他字段保持字符串
       const dataToSend = {
         longitude: formData.longitude,
         latitude: formData.latitude,
         altitude: formData.altitude,
-        vbat: formData.vbat
+        vbat: parseFloat(formData.vbat)
       };
 
       // 发送数据到后端

@@ -14,7 +14,7 @@ app.post('/api/gps', async (req, res) => {
     const { longitude, latitude, altitude, vbat } = req.body;
     
     // 验证数据
-    if (typeof longitude !== 'string' || typeof latitude !== 'string' || typeof altitude !== 'string' || typeof vbat !== 'string') {
+    if (typeof longitude !== 'string' || typeof latitude !== 'string' || typeof altitude !== 'string' || typeof vbat !== 'number') {
       return res.status(400).json({ error: 'Invalid data format' });
     }
     
